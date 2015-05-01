@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smelly Toggle</title>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet">
+    <link href="../dist/smelly.toggle.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Smelly Toggle</h1>
+      <table class="u-full-width">
+        <thead>
+          <th>Props</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Default</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>message</td>
+            <td>String</td>
+            <td>true</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td>actionLabel</td>
+            <td>String</td>
+            <td>false</td>
+            <td>Dismiss</td>
+          </tr>
+          <tr>
+            <td>onInit</td>
+            <td>Function</td>
+            <td>false</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td>onShow</td>
+            <td>Function</td>
+            <td>false</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td>onDismiss</td>
+            <td>Function</td>
+            <td>false</td>
+            <td>null</td>
+          </tr>
+        </tbody>
+      </table>
+<pre><code>&lt;Snackbar
+  message="Event added to your calendar"
+  ref="snackbar"
+  onDismiss={ this._handleDismiss }
+  onShow={ this._handleShow }
+  onInit={ this._handleInit } /&gt;</code></pre>
+
+      <p>Show snack message</p>
+      <pre><code>this.refs.snackbar.show();</code></pre>
+
+      <p>Hide snack message</p>
+      <pre><code>this.refs.snackbar.dismiss();</code></pre>
+
+      <div id="toggle"></div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.1/JSXTransformer.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.min.js"></script>
+    <script src="../dist/index.js"></script>
+
+    <script type="text/jsx">
+      var Toggle = Smelly.Toggle;
+      var isChecked = true;
+
+      var Example = React.createClass({
+        getInitialState: function() {
+          return {
+            output: 'Component Mounted',
+            checked: isChecked ? 'true' : 'false'
+          };
+        },
+
+        _handleToggle: function(checked) {
+          this.setState({
+            output: 'onToggle called',
+            checked: checked ? 'true' : 'false'
+          });
+        },
+
+        render: function() {
+          var output = (
+            <div>
+            <p>Events</p>
+            <pre><code>{ this.state.output }</code></pre>
+            </div>
+          );
+
+          var checked = (
+            <div>
+            <p>Checked</p>
+            <pre><code>{ this.state.checked }</code></pre>
+            </div>
+          );
+
+          return (
+            <div>
+              { this.state.output ? output : null }
+              { checked }
+              <Toggle
+                toggled={isChecked}
+                name="test"
+                id="test"
+                value="test-value"
+                onToggle={this._handleToggle}
+              />
+            </div>
+          );
+        }
+      });
+
+      React.render(
+        <Example />,
+        document.getElementById('toggle')
+      );
+    </script>
+  </body>
+</html>
